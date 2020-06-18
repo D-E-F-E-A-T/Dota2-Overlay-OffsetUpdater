@@ -32,7 +32,6 @@
             this.button1 = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.lbl_modDate = new System.Windows.Forms.Label();
-            this.webBrowser1 = new System.Windows.Forms.WebBrowser();
             this.label2 = new System.Windows.Forms.Label();
             this.lbl_stats = new System.Windows.Forms.Label();
             this.SuspendLayout();
@@ -67,15 +66,6 @@
             this.lbl_modDate.TabIndex = 2;
             this.lbl_modDate.Text = "0";
             // 
-            // webBrowser1
-            // 
-            this.webBrowser1.Location = new System.Drawing.Point(250, 48);
-            this.webBrowser1.MinimumSize = new System.Drawing.Size(20, 20);
-            this.webBrowser1.Name = "webBrowser1";
-            this.webBrowser1.Size = new System.Drawing.Size(115, 97);
-            this.webBrowser1.TabIndex = 3;
-            this.webBrowser1.Visible = false;
-            // 
             // label2
             // 
             this.label2.AutoSize = true;
@@ -102,7 +92,6 @@
             this.ClientSize = new System.Drawing.Size(377, 157);
             this.Controls.Add(this.lbl_stats);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.webBrowser1);
             this.Controls.Add(this.lbl_modDate);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.button1);
@@ -121,7 +110,6 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label lbl_modDate;
-        private System.Windows.Forms.WebBrowser webBrowser1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label lbl_stats;
     }

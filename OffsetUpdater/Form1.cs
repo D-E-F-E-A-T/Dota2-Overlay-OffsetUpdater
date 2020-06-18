@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -44,7 +45,7 @@ namespace OffsetUpdater
         }
 
         // Write the offsets to our config file.
-        private void writeOffsets()
+        private void writeOffsets(string rawOffsets)
         {
             string[] temp = rawOffsets.Split();
             string offset = "";
@@ -58,55 +59,18 @@ namespace OffsetUpdater
             getFileInfo();
         }
 
+        string offsetsURL = "https://raw.githubusercontent.com/skrixx68/Dota2-Overlay-OffsetUpdater/master/latest_offsets.txt";
+
+
         //Start updating offset from dataserver.
-        private async void button1_Click(object sender, EventArgs e)
+        private void button1_Click(object sender, EventArgs e)
         {
-            lbl_stats.Text = "Fetching Latest Offsets , Please Wait";
-            Thread.Sleep(100);
-            webBrowser1.ScriptErrorsSuppressed = true;
-            webBrowser1.Navigate("https://pastebin.com/Gf8T1DDn");
-            //wait for page loading
-            await PageLoad(10);
-            string urlOffs;
-            HtmlElement htmlelement = webBrowser1.Document.GetElementById("paste_code");
-            if (htmlelement != null)
-            {
-                urlOffs = webBrowser1.Document.GetElementById("paste_code").OuterText;
-                rawOffsets = urlOffs;
-                htmlelement = null;
-                webBrowser1.Dispose();
-                writeOffsets();
-            }
-            else
-            {
-                MessageBox.Show("Loading data site failed.");
-            }
-        }
-
-        private string _rawOffs;
-        public string rawOffsets
-        {
-            get { return _rawOffs; }
-            set { _rawOffs = value; } 
-        }
-
-        private async Task PageLoad(int TimeOut)
-        {
-            TaskCompletionSource<bool> PageLoaded = null;
-            PageLoaded = new TaskCompletionSource<bool>();
-            int TimeElapsed = 0;
-            webBrowser1.DocumentCompleted += (s, e) =>
-            {
-                if (webBrowser1.ReadyState != WebBrowserReadyState.Complete) return;
-                if (PageLoaded.Task.IsCompleted) return; PageLoaded.SetResult(true);
-            };
-            
-            while (PageLoaded.Task.Status != TaskStatus.RanToCompletion)
-            {
-                await Task.Delay(10);
-                TimeElapsed++;
-                if (TimeElapsed >= TimeOut * 100) PageLoaded.TrySetResult(true);
-            }
+            WebClient webClient = new WebClient();
+            Stream stream = webClient.OpenRead(offsetsURL);
+            StreamReader reader = new StreamReader(stream);
+            String content = reader.ReadToEnd();
+            Debug.WriteLine(content);
+            writeOffsets(content);
         }
 
     }
